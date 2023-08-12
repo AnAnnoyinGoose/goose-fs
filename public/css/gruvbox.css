@@ -1,0 +1,29 @@
+
+
+
+
+body {
+  background-color: #282828;
+  color: #ebdbb2;
+}
+
+ul li {
+  border-bottom: 1px solid #3c3836;
+  border-top: 1px solid #3c3836;
+  padding: 5px 0 5px 0;
+  font-family: Roboto, sans-serif;
+}
+
+a {
+  color: #fabd2f;
+}
+
+button, input[type=button], input[type=submit] {
+  color: #ebdbb2;
+  background-color: #d79921;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+}
+

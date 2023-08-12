@@ -1,0 +1,57 @@
+* Goose-FS
+- A web cloud service written in JS using the ExpressJS and EJS framework for the backend and the templating.
+** About
+*** Why did I make this?
+- Well the reason is simple. I got tired of having to either create 7 different google accounts, or pay just to be able to store a few HQ videos/photos. I do know of the "harder disks" concept,
+  but it isn't really applicable to smartphones as mostly you'ld want to be able to view/store the data on the go and afaik there isn't a mobile version of the YT cloud storage program,
+  and making one isn't something I want to go through as it involves learning sh*t I don't like (Java) and Kotlin just looks confusing at times tbh.
+*** How does it work?
+- The process is quite simple all data about the files is stored in a json file 'users.json' ( the data it self is storein under the username as a folder in uploads (eg. uploads/user1/file.ext)
+  the data stored is:
+
+  - the additional path (if the file is in root of users' folder the additional path will be '.' else the folders name eg. full path of file 'upload/user1/dir1/file.ext' then the additional path will be 'dir1')
+  - the file size in bytes
+  - the mime type
+  - name and timestamp
+  - a deletion confirmation state and password
+
+#+BEGIN_EXAMPLE json
+{
+  "users": [
+    {
+      "username": "user",
+      "password": "user",
+      "storageLimit": 50,
+      "deletionConfirmation": true,
+      "deletionConfirmationPassword": "password",
+      "files": [
+        {
+          "name": "VID-20230330-WA0002.mp4",
+          "size": 4020885,
+          "mimetype": "application/octet-stream",
+          "timestamp": "2023-07-21T10:03:14.429Z",
+          "folder": "."
+        }
+      ]
+    }
+  ]
+}
+#+END_EXAMPLE
+      - this is the current default file structure of the 'users.json'
+
+  The filesize functionality (as of 2023-7-21) isn't implemented *yet*, but I'm hoping that to the end of August I'll get it done ( it's not hard but I dont have much time )
+
+
+** Roadmap
+- Batch uploading [DONE] (2023-7-26)
+- Multiple file selection
+- Better UI/UX
+- A choice between a DB and the current method
+- Themes
+- ecryption and/or compression 
+- easier way to add new users
+
+*** Will try
+- Somehow entangle with 'harder disks' to save storage?
+- Using a DB instead of the current method
+- Using HTMX insted of EJS + ExpressJS 

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>File Browser</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/gruvbox.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+  <header>
+    <div class="content">
+
+      <h1>File Browser</h1>
+      <% if (user) { %>
+        <p>Viewing: <%= user.username %>
+        </p>
+        <form action="/logout" method="POST">
+          <button type="submit" id="logout">Logout</button>
+        </form>
+        <% } else { %>
+          <p>Please <a href="/login">login</a> to access your files.</p>
+          <% } %>
+
+
+    </div>
+  </header>
+  <div class="file-upload-container">
+    <button onclick="displayUpload()">Upload</button>
+  </div>
+  <div class="content">
+    <h2>Your Folders:</h2>
+    <% userFolders.forEach(folder=> { %>
+      <form action="/" method="GET" style="display: inline;">
+        <input type="hidden" name="folder" value="<%= folder %>">
+        <button type="submit">
+          <%= folder==='./' ? 'Root' : folder %>
+        </button>
+      </form>
+      <% }); %>
+
+        <h2>Your Files:</h2>
+        <% if (filesInFolder.length> 0) { %>
+          <ul>
+            <% filesInFolder.forEach(file=> { %>
+              <li>
+                <%= file.name %>
+                  [<a href="/download/<%= file.name %>">Download</a>]
+                  <% if (deletionConfirmation) { %>
+                    [<button id="delete" type="submit" onclick="ConfirmRemoval( '<%= file.name %>' )">Delete</button>]
+                    <% } else { %>
+                      [<form action="/delete/<%= file.name %>?_method=DELETE" method="POST" style="display: inline;">
+                        <button id="delete" type="submit">Delete</button>
+                      </form>]
+                      <% } %>
+                        <button type="button"
+                          onclick="togglePreview('<%= file.name.split(" ").join("").split(" ").join("").split(" ").join("") %>')">View</button>
+                        <video src="/preview/<%= file.name %>" class="hidden preview"
+                          id="preview-<%= file.name.split(" ").join("").split(" ").join("").split(" ").join("") %>" controls></video>
+                        <modal class="remove-container hidden" id="removal-container">
+                          <div class="remove-content">
+                            <h1>Please input file deletion password</h1>
+                            <form action="/delete/<%= file.name %>?_method=DELETE" method="post">
+                              <input type="password" name="deletePassword" id="deletePassword" required>
+                              <input type="submit" value="DELETE">
+                            </form>
+                          </div>
+                        </modal>
+              </li>
+              <% }); %>
+          </ul>
+          <% } else { %>
+            <p>No files in this folder.</p>
+            <% } %>
+  </div>
+
+
+  <div id="file-upload" class="file-upload hidden">
+    <h2>Upload File</h2>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <label for="fileInput">Choose files</label>
+      <input type="file" style="display: none;" id="fileInput" name="files" multiple required>
+
+      <input type="text" id="folderInput" name="folder" placeholder="Enter folder path" required>
+      <button type="submit">Upload</button>
+    </form>
+
+
+
+  </div>
+
+
+  <script src="/js/main.js"></script>
+</body>
+
+</html>
